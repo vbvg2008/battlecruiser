@@ -1,17 +1,24 @@
-import setuptools
+import os
+import re
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+from setuptools import find_packages, setup
 
-setuptools.setup(
-    name="battlecruiser",
-    version="0.0.1",
-    author="XMD",
-    description="deep learning library",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    url="https://github.com/flarahome/battlecruiser",
-    packages=setuptools.find_packages(),
-    classifiers=["Programming Language :: Python :: 3"],
-    python_requires='>=3.6',
-)
+
+def get_version():
+    path = os.path.dirname(__file__)
+    version_re = re.compile(r'''__version__ = ['"](.+)['"]''')
+    with open(os.path.join(path, 'battlecruiser', '__init__.py')) as f:
+        init = f.read()
+    return version_re.search(init).group(1)
+
+
+setup(name="battlecruiser",
+      version=get_version(),
+      author="XMD",
+      description="deep learning library",
+      long_description="This is a deep learning library, not a run-of-the-mill battlecruiser.",
+      url="https://github.com/flarahome/battlecruiser",
+      license="Apache License 2.0",
+      packages=find_packages(),
+      classifiers=["License :: OSI Approved :: Apache Software License", "Programming Language :: Python :: 3"],
+      python_requires='>=3.6')
